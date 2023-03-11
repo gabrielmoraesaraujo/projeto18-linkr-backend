@@ -12,10 +12,11 @@ export async function validCadastro(req,res,next){
         const errors = error.details.map((detail) => detail.message)
         return res.status(400).send({errors})
     }
+  
 
-    const cadastroExists = await db.query('SELECT * FROM users WHERE name=$1', [cadastro.name])
+    const cadastroExists = await db.query('SELECT * FROM users WHERE email=$1', [cadastro.email])
 
-    if(cadastroExists) return res.sendStatus(409)
+    if(cadastroExists.rowCount>0) return res.sendStatus(409)
 
     res.locals.cadastro = cadastro
 
