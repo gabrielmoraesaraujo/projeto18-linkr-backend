@@ -1,14 +1,19 @@
 import { db } from '../database/database.js'
-//import bcrypt from 'bcrypt'
+import bcrypt from 'bcrypt'
 
 export async function create(req,res){
+
     const { name, email, password} = res.locals.cadastro
-  //  const passwordHash = bcrypt.hashSync(cadastro.password, 10)
+
+
     try{
+
+      const passwordHash = bcrypt.hashSync(password, 10)
+
       await db.query(`
-      INSERT INTO users (name, email, password:passwordHash)
+      INSERT INTO users (name, email, password)
       VALUES ($1, $2, $3);
-      `, [name, email, password])
+      `, [name, email, passwordHash])
       
       
       res.sendStatus(201)

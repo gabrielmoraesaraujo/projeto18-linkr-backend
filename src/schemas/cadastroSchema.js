@@ -5,6 +5,6 @@ export const createCadastroSchema = joi.object({
     name: joi.string().min(2).required(),
     email: joi.string().min(6).required(),
     password: joi.string().min(2).required(),
-    confirmpassword: joi.string().min(2).required()
+    confirmpassword: joi.ref("password")
   
 });
